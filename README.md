@@ -1,4 +1,24 @@
 #Ogya
+
+## Usage
+1. __Add it in your root build.gradle at the end of repositories:__
+    ```gradle
+    	allprojects {
+    		repositories {
+    			...
+    			maven { url 'https://jitpack.io' }
+    		}
+    	}
+    ```
+2. __Add the dependency__    
+    ```gradle
+    dependencies {
+    	        implementation 'com.github.billkainkoom:ogya:0.50'
+    	}
+    ```
+
+
+
 ## Quick List (Listable Adapter)
 Quick list simply gives you one method to use for all types of list
 
