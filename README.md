@@ -1,4 +1,4 @@
-#Ogya
+# Ogya
 
 Ogya is a set of tools for quick android development. It gives you a consistent way to display dialogs and load lists with only one recycler adapter. The adapter can handle multiple view types. Do more with less.
  
