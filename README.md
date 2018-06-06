@@ -1,5 +1,152 @@
 #Ogya
-## QuickList (Listable Adapter)
+## Quick List (Listable Adapter)
+Quick list simply gives you one method to use for all types of list
+
+## Idealistic way to use Quick List
+First create an  Object eg(ListableTypes) in Kotlin like
+
+```kotlin
+object ListableTypes {
+    val Person = ListableType(R.layout.person)
+    val Animal = ListableType(R.layout.animal)
+    val Furniture = ListableType(R.layout.furniture)
+}
+```
+
+Now let your classes that you wish to display in a list implement __Listable__
+eg
+
+```kotlin
+data class MyPerson(val name: String = "", val email: String = "", val type: ListableType = ListableTypes.Person) : Listable {
+    override fun getListableType(): ListableType? {
+
+        return type
+    }
+}
+
+data class Animal(val name: String = "", val specie: String = "") : Listable {
+    override fun getListableType(): ListableType? {
+        return ListableTypes.Animal
+    }
+}
+
+data class Furniture(val name: String = "", val specie: String = "") : Listable {
+    override fun getListableType(): ListableType? {
+        return ListableType(R.layout.furniture)
+    }
+}
+```
+
+
+Well thats it you are almost there...
+
+Assuming this was your data source
+
+```kotlin
+val peopleAndThings  = mutableListOf(
+                MyPerson(name = "Kwasi Malopo", email = "kwasimalopo@outlook.com"),
+                MyPerson(name = "Adwoa Lee", email = "adwoalee@gmail.com", type = ListableTypes.Furniture),
+                Animal(name = "Cassava", specie = "Plantae"),
+                Animal(name = "Cat", specie = "Felidae"),
+                Furniture(name = "Cat", specie = "Felidae")
+        )       
+```
+
+Go ahead and show your list by calling __loadList__ from __ListableHelper__
+
+```kotlin
+ListableHelper.loadList(
+                context = context,
+                recyclerView = recyclerView,
+                listableType = ListableTypes.Person,
+                listables = peopleAndThings,
+                listableBindingListener = { listable, listableBinding, position ->
+                    when (listable) {
+                        is MyPerson -> {
+                            if (listableBinding is PersonBinding) {
+                                listableBinding.name.text = listable.name
+                                listableBinding.email.text = listable.email
+                            } else if (listableBinding is FurnitureBinding) {
+                                listableBinding.image.setImageResource(R.drawable.ic_info_outline_black_24dp)
+                                listableBinding.name.text = listable.name
+                                listableBinding.specie.text = listable.email
+                            }
+                        }
+                        is Animal -> {
+                            if (listableBinding is AnimalBinding) {
+                                listableBinding.name.text = listable.name
+                                listableBinding.specie.text = listable.specie
+                            }
+                        }
+                        is Furniture -> {
+                            if (listableBinding is FurnitureBinding) {
+                                listableBinding.image.setImageResource(R.drawable.ic_info_outline_black_24dp)
+                                listableBinding.name.text = listable.name
+                                listableBinding.specie.text = listable.specie
+                            }
+                        }
+                    }
+
+                },
+                listableClickedListener = { listable, listableBinding, position ->
+                    when (listable) {
+                        is MyPerson -> {
+                            Toast.makeText(context, listable.name, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                },
+                layoutManagerType = LayoutManager.Vertical
+        )
+```
+
+ 
+
+### Listable
+Listable is an interface that all classes that you wish to display in a list should extend.
+
+```kotlin
+interface Listable {
+    fun getListableType(): ListableType?
+}
+```
+
+### ListableType
+The listable type is a simple class that tells listable adapter what type of layout to use.
+Its defined as
+
+```kotlin
+class ListableType(val layout: Int = 0)
+```
+
+### Listable Helper
+The listableHelper is a set of functions and variables that make the usage of QuickList easier.
+The constructor is internal to the module so it cannot be instantiated from your code. 
+To display items in a list just call the public function __loadList(...)__ in __ListableHelper__
+
+```kotlin
+fun <T : Listable> loadList(context: Context, 
+                                recyclerView: RecyclerView, 
+                                listables: MutableList<T>, 
+                                listableType: ListableType,
+                                listableBindingListener: (T, ViewDataBinding, Int) -> Unit = { x, y, z -> },
+                                listableClickedListener: (T, ViewDataBinding,Int) -> Unit = { x, y,z -> },
+                                layoutManagerType: LayoutManager = LayoutManager.Vertical,
+                                stackFromEnd: Boolean = false
+    ): ListableAdapter<T>
+```
+ 
+
+ 
+ | Variable                | Purpose                                                                                                                                                               |
+ |-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+ | context                 | context                                                                                                                                                               |
+ | recyclerView            | is a reference to your recycler view                                                                                                                                  |
+ | listables               | is a reference to your recycler viewis a mutable list of objects that you want to render in a list. All objects in this list should implement the Listable interface. |
+ | listableType            | Default type to use when no listableType is not specified on an object                                                                                                |
+ | listableBindingListener | An anonymous function that supplies you with a listable its position and a viewDataBinder to display information                                                      |
+ | listableClickedListener | An anonymous function that supplies you with a listable its position and a viewDataBinder. It is called when an item on the list is clicked                           |
+ | layoutManagerType       | Type of layout manager that ListableAdapter would set to the recyclerView supplied                                                                                    |
+ | stackFromEnd            | A boolean which determines whether a recycler view should be stacked from end or not                                                                                  |
 
 
 ## Quick Dialog

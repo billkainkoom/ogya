@@ -7,7 +7,10 @@ import android.support.v7.widget.RecyclerView
 
 object ListableHelper {
 
-    fun <T : Listable> loadList(context: Context, recyclerView: RecyclerView, listables: MutableList<T>, listableType: ListableType,
+    fun <T : Listable> loadList(context: Context,
+                                recyclerView: RecyclerView,
+                                listables: MutableList<T>,
+                                listableType: ListableType,
                                 listableBindingListener: (T, ViewDataBinding, Int) -> Unit = { x, y, z -> },
                                 listableClickedListener: (T, ViewDataBinding,Int) -> Unit = { x, y,z -> },
                                 layoutManagerType: LayoutManager = LayoutManager.Vertical,
