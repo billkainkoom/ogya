@@ -33,6 +33,7 @@ Ogya is a set of tools for quick android development. It gives you a consistent 
 
 
 ## Quick List (Listable Adapter)
+![](https://github.com/billkainkoom/ogya/blob/master/images/listableadapter.jpg)
 Quick list simply gives you one method to use for all types of list
 
 ## Idealistic way to use Quick List
@@ -208,7 +209,7 @@ __loadList__ returns a __ListableAdapter<T>__ that you can use to add or remove 
 
 ## Quick Dialog
 
-![](https://github.com/billkainkoom/ogya/blob/master/images/device-2018-06-04-233829.png)
+![](https://github.com/billkainkoom/ogya/blob/master/images/quickdialogs.jpg)
 
 Quick dialog simply gives you multiple consistent variants of dialogs you need in your  Android App.
 
