@@ -178,7 +178,7 @@ fun <T : Listable> loadList(context: Context,
 ```
  
 
- 
+ ### Arguments in LoadList  
  | Variable                | Purpose                                                                                                                                                               |
  |-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
  | context                 | context                                                                                                                                                               |
@@ -191,7 +191,7 @@ fun <T : Listable> loadList(context: Context,
  | stackFromEnd            | A boolean which determines whether a recycler view should be stacked from end or not                                                                                  |
 
 
-loadList returns a __ListableAdapter<T>__ that you can use to add or remove elements from your list
+__loadList__ returns a __ListableAdapter<T>__ that you can use to add or remove elements from your list
 
 ### Methods on  ListableAdapter<T>
 
@@ -208,6 +208,8 @@ loadList returns a __ListableAdapter<T>__ that you can use to add or remove elem
 
 ## Quick Dialog
 
+![](https://github.com/billkainkoom/ogya/blob/master/images/device-2018-06-04-233829.png)
+
 Quick dialog simply gives you multiple consistent variants of dialogs you need in your  Android App.
 
   - Message Dialog
@@ -215,26 +217,6 @@ Quick dialog simply gives you multiple consistent variants of dialogs you need i
   - Alert Dialog
   - Input Dialog
   
-  ### Quick Start
-
-Step 1. Add it in your root build.gradle at the end of repositories:
-```gradle
-	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
-```
-
-Step 2. Add the dependency
-```gradle
-	dependencies {
-	        implementation 'com.github.billkainkoom:quickdialog:v0.70'
-}
-```
-
-
 ### Message Dialog
  A message dialog simply displays an image with one button.
 
