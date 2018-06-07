@@ -34,6 +34,7 @@ Ogya is a set of tools for quick android development. It gives you a consistent 
 
 ## Quick List (Listable Adapter)
 ![](https://github.com/billkainkoom/ogya/blob/master/images/listableadapter.jpg)
+
 Quick list simply gives you one method to use for all types of list
 
 ## Idealistic way to use Quick List
