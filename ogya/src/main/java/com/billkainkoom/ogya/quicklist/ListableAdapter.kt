@@ -69,38 +69,38 @@ class ListableAdapter <T : Listable> internal  constructor(
         notifyItemRangeChanged(position, listables.size)
     }
 
-    fun addAt(position: Int, cardObject: T) {
-        listables.add(position, cardObject)
+    fun addAt(position: Int, listable: T) {
+        listables.add(position, listable)
         notifyItemInserted(position)
     }
 
-    fun replaceAt(position: Int, cardObject: T) {
-        listables[position] = cardObject
+    fun replaceAt(position: Int, listable: T) {
+        listables[position] = listable
         notifyItemChanged(position)
     }
 
-    fun addAt(position: Int, vararg cardObject: T) {
-        listables.addAll(position, cardObject.asList())
+    fun addAt(position: Int, vararg listable: T) {
+        listables.addAll(position, listable.asList())
         notifyItemInserted(listables.size - 1)
         notifyItemRangeChanged(position, listables.size)
     }
 
-    fun addAt(position: Int, cardObjects: List<T>) {
-        listables.addAll(position, cardObjects)
+    fun addAt(position: Int, newListables: List<T>) {
+        listables.addAll(position, newListables)
         notifyItemInserted(listables.size - 1)
         notifyItemRangeChanged(position, listables.size)
     }
 
-    fun add(cardObjects: List<T>) {
-        (cardObjects as ArrayList).removeAll(listables)
+    fun add(newListables: List<T>) {
+        (newListables as ArrayList).removeAll(listables)
         val preSize = listables.size
-        listables.addAll(cardObjects)
+        listables.addAll(newListables)
         notifyItemInserted(listables.size - 1)
         notifyItemRangeChanged(preSize, listables.size)
     }
 
-    fun add(cardObject: T) {
-        listables.add(cardObject)
+    fun add(listable: T) {
+        listables.add(listable)
         notifyItemInserted(listables.size - 1)
 
     }

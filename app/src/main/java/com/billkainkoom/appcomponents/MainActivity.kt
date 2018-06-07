@@ -2,6 +2,7 @@ package com.billkainkoom.appcomponents
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.text.InputType
@@ -11,10 +12,7 @@ import com.billkainkoom.appcomponents.databinding.FurnitureBinding
 import com.billkainkoom.appcomponents.databinding.PersonBinding
 import com.billkainkoom.ogya.quickdialog.QuickDialog
 import com.billkainkoom.ogya.quickdialog.QuickDialogType
-import com.billkainkoom.ogya.quicklist.LayoutManager
-import com.billkainkoom.ogya.quicklist.Listable
-import com.billkainkoom.ogya.quicklist.ListableHelper
-import com.billkainkoom.ogya.quicklist.ListableType
+import com.billkainkoom.ogya.quicklist.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 object ListableTypes {
@@ -57,13 +55,20 @@ class MainActivity : AppCompatActivity() {
         context = this
 
 
-        loadList(context!!,card_objects)
+        val a = loadList(context!!, card_objects)
+
+        Handler().postDelayed({
+            a.add(Furniture(name = "Cat", specie = "Felidae"))
+        }, 3000)
+
+
+
         button.setOnClickListener {
             d7(context!!)
         }
     }
 
-    fun loadList(context: Context, recyclerView: RecyclerView) {
+    fun loadList(context: Context, recyclerView: RecyclerView): ListableAdapter<Listable> {
         val people = mutableListOf(
                 MyPerson(name = "Kwasi Malopo", email = "kwasimalopo@outlook.com"),
                 MyPerson(name = "Adwoa Lee", email = "adwoalee@gmail.com", type = ListableTypes.Furniture),
@@ -115,6 +120,8 @@ class MainActivity : AppCompatActivity() {
                 },
                 layoutManagerType = LayoutManager.Vertical
         )
+
+        return a
     }
 
 
