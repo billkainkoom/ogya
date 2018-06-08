@@ -30,7 +30,7 @@ Ogya is a set of tools for quick android development. It gives you a consistent 
 3. __Add the dependency__    
     ```gradle
     dependencies {
-    	        implementation 'com.github.billkainkoom:ogya:0.50'
+    	        implementation 'com.github.billkainkoom:ogya:0.52'
     	}
     ```
 
