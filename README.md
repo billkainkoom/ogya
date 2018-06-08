@@ -1,6 +1,10 @@
 # Ogya
 
 Ogya is a set of tools for quick android development. It gives you a consistent way to display dialogs and load lists with only one recycler adapter. The adapter can handle multiple view types. Do more with less.
+
+*   Quick Dialog for dialogs
+*   Quick Lists for recycler views
+*   Quick Permissions for permissions
  
 ## Usage
 1. Enabled __android data binding__
@@ -366,3 +370,34 @@ QuickDialog(
                 .show()
  ```
 
+## Quick Permissions
+In pre-lollipop permission checking was not really an issue. Just add it to your manifest 
+and you are good to go. However in the post lollipop era we have to deal with runtime permissions. Quick Permissions makes it easier for you to request permissions at runtime.
+
+```kotlin
+    val REQUEST_CODE = 100
+    var permissionHelper: PermissionHelper? = null
+    
+    fun d8(context: Context) {
+        permissionHelper = PermissionHelper(this, context)
+        if (permissionHelper!!.requestPermissions(REQUEST_CODE, Manifest.permission.READ_CONTACTS)) {
+            //permissions are granted , if not a call to ask for permission would be triggered
+        }
+    }
+    
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    
+            when (requestCode) {
+                REQUEST_CODE -> {
+                    val quickObject = QuickObject(0, "Calling is great", "MainActivity wants to read your contacts and send to Google", R.drawable.ic_info_outline_black_24dp, "")
+                    permissionHelper!!.handlePermissionRequestResponse(quickObject, requestCode, permissions, grantResults, object : PermissionHelper.PermissionRequestListener {
+                        override fun onPermissionRequestResponse(granted: Boolean) {
+                            if (granted) {
+                                Toast.makeText(context, "Permission Granted", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    })
+                }
+            }
+    }
+```
