@@ -20,7 +20,7 @@ import com.billkainkoom.ogya.databinding.QuickDialogBinding
  * The quick dialog is a simple dialog helper that helps you create consistent variations of dialogs for your app
  */
 class QuickDialog(
-        context: Context,
+        val context: Context,
         style: QuickDialogType,
         title: String = "",
         message: String = "",
@@ -239,6 +239,13 @@ class QuickDialog(
         quickDialogBinding?.positiveButton?.text = positive.toUpperCase()
         quickDialogBinding?.negativeButton?.text = negative.toUpperCase()
         quickDialogBinding?.neutralButton?.text = neutral.toUpperCase()
+        return this
+    }
+
+    fun overrideButtonNames(positive: Int = R.string.ok, negative: Int = R.string.string_cancel, neutral: Int = R.string.maybe): QuickDialog {
+        quickDialogBinding?.positiveButton?.text = context.resources.getString(positive).toUpperCase()
+        quickDialogBinding?.negativeButton?.text = context.resources.getString(negative).toUpperCase()
+        quickDialogBinding?.neutralButton?.text = context.resources.getString(neutral).toUpperCase()
         return this
     }
 

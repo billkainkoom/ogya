@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Ogya</string>
+    <string name="string_continue">Continue</string>
+    <string name="string_cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="maybe">Maybe</string>
 </resources>

@@ -102,7 +102,5 @@ class ListableAdapter <T : Listable> internal  constructor(
     fun add(listable: T) {
         listables.add(listable)
         notifyItemInserted(listables.size - 1)
-
     }
-
 }
