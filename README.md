@@ -374,6 +374,8 @@ QuickDialog(
 In pre-lollipop permission checking was not really an issue. Just add it to your manifest 
 and you are good to go. However in the post lollipop era we have to deal with runtime permissions. Quick Permissions makes it easier for you to request permissions at runtime.
 
+![](https://github.com/billkainkoom/ogya/blob/master/images/permissionhelper.jpg)
+
 ```kotlin
     val REQUEST_CODE = 100
     var permissionHelper: PermissionHelper? = null

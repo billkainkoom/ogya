@@ -255,7 +255,7 @@ class MainActivity : AppCompatActivity() {
 
         when (requestCode) {
             REQUEST_CODE -> {
-                val quickObject = QuickObject(0, "Calling is great", "MainActivity wants to read your contacts and send to Google", R.drawable.ic_info_outline_black_24dp, "")
+                val quickObject = QuickObject(0, "Calling is great", "MainActivity wants to read your contacts", R.drawable.ic_info_outline_black_24dp, "")
                 permissionHelper!!.handlePermissionRequestResponse(quickObject, requestCode, permissions, grantResults, object : PermissionHelper.PermissionRequestListener {
                     override fun onPermissionRequestResponse(granted: Boolean) {
                         if (granted) {
