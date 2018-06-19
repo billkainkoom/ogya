@@ -57,6 +57,21 @@ class QuickDialog(
         quickDialog?.setCancelable(false)
 
 
+        switchStyle(style)
+
+        /**
+         * Set default click behaviour on buttons
+         */
+        overrideClicks(positiveClick = { ->
+
+        }, negativeClick = { ->
+
+        }, neutralClick = { ->
+
+        })
+    }
+
+    fun switchStyle(style: QuickDialogType):QuickDialog {
         when (style) {
             QuickDialogType.Progress -> {
                 quickDialogBinding?.image?.visibility = View.GONE
@@ -100,17 +115,14 @@ class QuickDialog(
 
             }
         }
+        return this
+    }
 
-        /**
-         * Set default click behaviour on buttons
-         */
-        overrideClicks(positiveClick = { ->
-
-        }, negativeClick = { ->
-
-        }, neutralClick = { ->
-
-        })
+    fun setData(title: String,message: String,image: Int):QuickDialog{
+        setDialogTitle(title)
+        setDialogMessage(message)
+        setDialogImage(image)
+        return  this
     }
 
     private fun setDialogImage(image: Int) {
@@ -131,7 +143,7 @@ class QuickDialog(
     }
 
     fun configureList(configuration: (dismiss: () -> Unit, recyclerView: RecyclerView) -> Unit = { d, r -> }): QuickDialog {
-        configuration(dismiss,getRecyclerView())
+        configuration(dismiss, getRecyclerView())
         return this
     }
 
