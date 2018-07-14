@@ -17,6 +17,7 @@ import com.billkainkoom.ogya.shared.QuickObject
 import com.billkainkoom.ogya.quicklist.*
 import com.billkainkoom.ogya.quickpermissions.PermissionHelper
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.card_objects
 
 object ListableTypes {
     val Person = ListableType(R.layout.person)

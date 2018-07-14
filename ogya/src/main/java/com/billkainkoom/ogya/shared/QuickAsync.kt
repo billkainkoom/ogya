@@ -12,7 +12,6 @@ class QuickAsync<T>(val context: Context, val initiateAsync: () -> T?, val async
         } catch (e: Exception) {
             null
         }
-
     }
 
     override fun onCancelled() {

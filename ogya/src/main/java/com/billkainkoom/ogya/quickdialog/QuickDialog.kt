@@ -39,7 +39,6 @@ class QuickDialog(
 
 
     init {
-
         initialize(context, style)
         setDialogTitle(title)
         setDialogMessage(message)
@@ -279,4 +278,3 @@ class QuickDialog(
         }
     }
 }
-

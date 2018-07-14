@@ -20,7 +20,6 @@ class ListableAdapter <T : Listable> internal  constructor(
         private val listableClickedListener: (T, ViewDataBinding, Int) -> Unit
 ) : RecyclerView.Adapter<ListableAdapter<T>.ListableViewHolder>() {
 
-
     private var currentListableType: ListableType? = null
 
 
@@ -30,7 +29,6 @@ class ListableAdapter <T : Listable> internal  constructor(
         return ListableViewHolder(listableBinding)
 
     }
-
 
     override fun onBindViewHolder(listableViewHolder: ListableViewHolder, listablePosition: Int) {
 
@@ -50,7 +48,6 @@ class ListableAdapter <T : Listable> internal  constructor(
         }
         currentListableType = listables[position].getListableType()
         return listables[position].getListableType()!!.layout
-
     }
 
     inner class ListableViewHolder(val viewBinding: ViewDataBinding) : RecyclerView.ViewHolder(viewBinding.root) {
