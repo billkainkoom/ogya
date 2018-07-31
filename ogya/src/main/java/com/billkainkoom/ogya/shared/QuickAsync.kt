@@ -3,7 +3,7 @@ package com.billkainkoom.ogya.shared
 import android.content.Context
 import android.os.AsyncTask
 
-class QuickAsync<T>(val context: Context, val initiateAsync: () -> T?, val asyncComplete: (response: T?) -> Unit) : AsyncTask<String, Void, T>() {
+class QuickAsync<T>(val initiateAsync: () -> T?, val asyncComplete: (response: T?) -> Unit) : AsyncTask<String, Void, T>() {
 
 
     override fun doInBackground(vararg urls: String): T? {
