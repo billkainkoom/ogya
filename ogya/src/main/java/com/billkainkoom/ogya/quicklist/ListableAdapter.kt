@@ -25,7 +25,6 @@ class ListableAdapter <T : Listable> internal  constructor(
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ListableViewHolder {
         val listableBinding: ViewDataBinding = DataBindingUtil.inflate(LayoutInflater.from(context), currentListableType!!.layout, null, false)
-        //val view = LayoutInflater.from(viewGroup.context).inflate(currentListableType!!.layout, viewGroup, false)
         return ListableViewHolder(listableBinding)
 
     }

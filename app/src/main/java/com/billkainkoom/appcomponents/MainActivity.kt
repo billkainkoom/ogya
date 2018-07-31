@@ -44,6 +44,42 @@ data class Furniture(val name: String = "", val specie: String = "") : Listable 
     }
 }
 
+object AnimalComponent : QuickBaseComponent<AnimalBinding, Animal>() {
+    override fun render(binding: AnimalBinding, listable: Animal) {
+        binding.name.text = listable.name
+        binding.specie.text = listable.specie
+    }
+
+    override fun listableType(): ListableType {
+        return ListableTypes.Animal
+    }
+}
+
+object FurnitureComponent : QuickBaseComponent<FurnitureBinding, Furniture>() {
+
+    override fun render(binding: FurnitureBinding, listable: Furniture) {
+        binding.name.text = listable.name
+        binding.specie.text = listable.specie
+    }
+
+    override fun listableType(): ListableType {
+        return ListableTypes.Animal
+    }
+}
+
+object MyPersonComponent : QuickBaseComponent<PersonBinding, MyPerson>() {
+
+    override fun render(binding: PersonBinding, listable: MyPerson) {
+        binding.name.text = listable.name
+        binding.email.text = listable.email
+    }
+
+    override fun listableType(): ListableType {
+        return ListableTypes.Person
+    }
+}
+
+
 data class L(val p: Int = 0)
 class MainActivity : AppCompatActivity() {
 
@@ -73,6 +109,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     fun loadList(context: Context, recyclerView: RecyclerView): ListableAdapter<Listable> {
         val people = mutableListOf(
                 MyPerson(name = "Kwasi Malopo", email = "kwasimalopo@outlook.com"),
@@ -91,20 +128,10 @@ class MainActivity : AppCompatActivity() {
                 listableBindingListener = { listable, listableBinding, position ->
                     when (listable) {
                         is MyPerson -> {
-                            if (listableBinding is PersonBinding) {
-                                listableBinding.name.text = listable.name
-                                listableBinding.email.text = listable.email
-                            } else if (listableBinding is FurnitureBinding) {
-                                listableBinding.image.setImageResource(R.drawable.ic_info_outline_black_24dp)
-                                listableBinding.name.text = listable.name
-                                listableBinding.specie.text = listable.email
-                            }
+                            MyPersonComponent.render(listableBinding as PersonBinding, listable)
                         }
                         is Animal -> {
-                            if (listableBinding is AnimalBinding) {
-                                listableBinding.name.text = listable.name
-                                listableBinding.specie.text = listable.specie
-                            }
+                            AnimalComponent.render(listableBinding as AnimalBinding, listable)
                         }
                         is Furniture -> {
                             if (listableBinding is FurnitureBinding) {
