@@ -44,7 +44,8 @@ data class Furniture(val name: String = "", val specie: String = "") : Listable 
     }
 }
 
-object AnimalComponent : QuickBaseComponent<AnimalBinding, Animal>() {
+object AnimalComponent : BaseComponent<AnimalBinding, Animal>() {
+
     override fun render(binding: AnimalBinding, listable: Animal) {
         binding.name.text = listable.name
         binding.specie.text = listable.specie
@@ -55,7 +56,7 @@ object AnimalComponent : QuickBaseComponent<AnimalBinding, Animal>() {
     }
 }
 
-object FurnitureComponent : QuickBaseComponent<FurnitureBinding, Furniture>() {
+object FurnitureComponent : BaseComponent<FurnitureBinding, Furniture>() {
 
     override fun render(binding: FurnitureBinding, listable: Furniture) {
         binding.name.text = listable.name
@@ -67,7 +68,7 @@ object FurnitureComponent : QuickBaseComponent<FurnitureBinding, Furniture>() {
     }
 }
 
-object MyPersonComponent : QuickBaseComponent<PersonBinding, MyPerson>() {
+object MyPersonComponent : BaseComponent<PersonBinding, MyPerson>() {
 
     override fun render(binding: PersonBinding, listable: MyPerson) {
         binding.name.text = listable.name
@@ -113,7 +114,7 @@ class MainActivity : AppCompatActivity() {
     fun loadList(context: Context, recyclerView: RecyclerView): ListableAdapter<Listable> {
         val people = mutableListOf(
                 MyPerson(name = "Kwasi Malopo", email = "kwasimalopo@outlook.com"),
-                MyPerson(name = "Adwoa Lee", email = "adwoalee@gmail.com", type = ListableTypes.Furniture),
+                MyPerson(name = "Adwoa Lee", email = "adwoalee@gmail.com"),
                 Animal(name = "Cassava", specie = "Plantae"),
                 Animal(name = "Cat", specie = "Felidae"),
                 Furniture(name = "Cat", specie = "Felidae")
