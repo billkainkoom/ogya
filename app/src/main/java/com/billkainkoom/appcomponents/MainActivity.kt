@@ -17,7 +17,7 @@ import com.billkainkoom.ogya.shared.QuickObject
 import com.billkainkoom.ogya.quicklist.*
 import com.billkainkoom.ogya.quickpermissions.PermissionHelper
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.card_objects
+
 
 object ListableTypes {
     val Person = ListableType(R.layout.person)
@@ -44,6 +44,43 @@ data class Furniture(val name: String = "", val specie: String = "") : Listable 
     }
 }
 
+object AnimalComponent : BaseComponent<AnimalBinding, Animal>() {
+
+    override fun render(binding: AnimalBinding, listable: Animal) {
+        binding.name.text = listable.name
+        binding.specie.text = listable.specie
+    }
+
+    override fun listableType(): ListableType {
+        return ListableTypes.Animal
+    }
+}
+
+object FurnitureComponent : BaseComponent<FurnitureBinding, Furniture>() {
+
+    override fun render(binding: FurnitureBinding, listable: Furniture) {
+        binding.name.text = listable.name
+        binding.specie.text = listable.specie
+    }
+
+    override fun listableType(): ListableType {
+        return ListableTypes.Animal
+    }
+}
+
+object MyPersonComponent : BaseComponent<PersonBinding, MyPerson>() {
+
+    override fun render(binding: PersonBinding, listable: MyPerson) {
+        binding.name.text = listable.name
+        binding.email.text = listable.email
+    }
+
+    override fun listableType(): ListableType {
+        return ListableTypes.Person
+    }
+}
+
+
 data class L(val p: Int = 0)
 class MainActivity : AppCompatActivity() {
 
@@ -69,14 +106,14 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener {
             //d6(context!!)
             d2(context!!)
-
         }
     }
+
 
     fun loadList(context: Context, recyclerView: RecyclerView): ListableAdapter<Listable> {
         val people = mutableListOf(
                 MyPerson(name = "Kwasi Malopo", email = "kwasimalopo@outlook.com"),
-                MyPerson(name = "Adwoa Lee", email = "adwoalee@gmail.com", type = ListableTypes.Furniture),
+                MyPerson(name = "Adwoa Lee", email = "adwoalee@gmail.com"),
                 Animal(name = "Cassava", specie = "Plantae"),
                 Animal(name = "Cat", specie = "Felidae"),
                 Furniture(name = "Cat", specie = "Felidae")
@@ -91,20 +128,10 @@ class MainActivity : AppCompatActivity() {
                 listableBindingListener = { listable, listableBinding, position ->
                     when (listable) {
                         is MyPerson -> {
-                            if (listableBinding is PersonBinding) {
-                                listableBinding.name.text = listable.name
-                                listableBinding.email.text = listable.email
-                            } else if (listableBinding is FurnitureBinding) {
-                                listableBinding.image.setImageResource(R.drawable.ic_info_outline_black_24dp)
-                                listableBinding.name.text = listable.name
-                                listableBinding.specie.text = listable.email
-                            }
+                            MyPersonComponent.render(listableBinding as PersonBinding, listable)
                         }
                         is Animal -> {
-                            if (listableBinding is AnimalBinding) {
-                                listableBinding.name.text = listable.name
-                                listableBinding.specie.text = listable.specie
-                            }
+                            AnimalComponent.render(listableBinding as AnimalBinding, listable)
                         }
                         is Furniture -> {
                             if (listableBinding is FurnitureBinding) {

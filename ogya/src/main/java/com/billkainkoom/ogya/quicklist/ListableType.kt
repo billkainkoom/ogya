@@ -1,3 +1,3 @@
 package com.billkainkoom.ogya.quicklist
 
-class ListableType(val layout: Int = 0)
+data class ListableType(val layout: Int = 0)
