@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             //d6(context!!)
-            d8(context!!)
+            d2(context!!)
 
         }
     }
