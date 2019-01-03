@@ -2,6 +2,7 @@ package com.billkainkoom.appcomponents
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
@@ -105,7 +106,8 @@ class MainActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             //d6(context!!)
-            d2(context!!)
+            //d2(context!!)
+            startActivity(Intent(this, FormActivity::class.java))
         }
     }
 

@@ -403,3 +403,141 @@ and you are good to go. However in the post lollipop era we have to deal with ru
             }
     }
 ```
+
+# Componentization
+
+In previous versions of Ogya, the **listableBindingListener** looked something like this
+
+```kotlin
+
+listableBindingListener = { listable, listableBinding, position ->
+		when (listable) {
+			is MyPerson -> {
+				if (listableBinding is PersonBinding) {
+					listableBinding.name.text = listable.name
+					listableBinding.email.text = listable.email
+					
+				} else  if (listableBinding is FurnitureBinding) {
+					listableBinding.image.setImageResource(R.drawable.ic_info_outline_black_24dp)
+					listableBinding.name.text = listable.name
+					listableBinding.specie.text = listable.email
+			}
+		}
+		is Animal -> {
+			if (listableBinding is AnimalBinding) {
+				listableBinding.name.text = listable.name
+				listableBinding.specie.text = listable.specie
+			}
+		}
+		is Furniture -> {
+			if (listableBinding is FurnitureBinding) {
+				listableBinding.image.setImageResource(R.drawable.ic_info_outline_black_24dp)
+				listableBinding.name.text = listable.name
+				listableBinding.specie.text = listable.specie
+			}
+		}
+	}
+}
+```
+
+
+
+This is *quite* ok. But Imagine you had a project where you had to display persons at multiple places. You would need to set the properties over and over again in all places. But with **Componentization**. Its done at one place and the change ripples across your entire project.
+
+
+## **Componentization Axioms**
+
+ - A component should have its dependencies injected into it
+ - A components state is determined by the listable object that’s passed to it.
+ 
+ 
+
+## **Origins**
+
+All components are derived from the abstract class **BaseComponent.**
+
+```kotlin
+abstract class BaseComponent<V : ViewDataBinding, L : Listable> { 
+
+	abstract fun render(binding: V, listable: L) 
+	
+	abstract fun listableType(): ListableType  
+}
+```
+
+
+It’s a generic abstract class that expects a **ViewDataBinding** Type and a **Listable (any class that extends Listable)** Type. The **ViewDataBinding** files are generated classes created by any layout file which has a root parent of  ```<layout>```.
+
+
+***Function: Render***
+
+The render method is used to display the component.
+
+***Function: ListableType***
+
+The listableType function returns the listableType of the component.
+
+
+## **Lets Dive In**
+
+The **Kotlin** language provides as with beautiful structures. One such structure is **object**.
+
+An **object** is a thread-safe singleton class. Our derived components are all **objects.** They have no constructors and they do not keep state. The only state they know of is the state of the **listable.**
+
+```kotlin
+object AnimalComponent : BaseComponent<AnimalBinding, Animal>() { 
+
+	override fun render(binding: AnimalBinding, listable: Animal) { 
+		binding.name.text = listable.name binding.specie.text = listable.specie 
+	} 
+
+	override fun listableType(): ListableType { 
+		return ListableTypes.Animal 
+	} 
+}
+```
+
+**Then …**
+
+```kotlin
+ListableHelper.loadList( 
+	context = context, 
+	recyclerView = recyclerView, 
+	listableType = ListableTypes.Person, 
+	listables = people, 
+	listableBindingListener = { listable, listableBinding, position -> 
+		when (listable) { 
+			is MyPerson -> { 
+				MyPersonComponent.render(listableBinding as PersonBinding, listable) 
+			} is Animal -> { 
+				AnimalComponent.render(listableBinding as AnimalBinding, listable) 
+			} is Furniture -> { 
+				//old way 
+				if (listableBinding is FurnitureBinding) { 						     
+					listableBinding.image.setImageResource(R.drawable.ic_info_outline_black_24dp) 
+					listableBinding.name.text = listable.name listableBinding.specie.text = listable.specie 
+				} 
+			}
+		}
+	},
+	listableClickedListener = { listable, listableBinding, position -> 
+			when (listable) { 
+				is MyPerson -> { 
+					Toast.makeText(context, listable.name, Toast.LENGTH_SHORT).show() 
+					} 
+				} 
+			}, 
+	layoutManagerType = LayoutManager.Vertical 
+)
+```
+
+
+This makes it easy to reuse code. As long as dependencies are provided for render, the components can be recreated with its expected behavior.
+
+
+
+**BaseComponents** are found in Ogya : 0.54
+
+```groovy
+	dependencies { implementation 'com.github.billkainkoom:ogya:0.54' }
+```

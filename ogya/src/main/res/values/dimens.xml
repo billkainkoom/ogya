@@ -2,4 +2,5 @@
 <resources>
     <dimen name="edit_text_top">16dp</dimen>
     <dimen name="inner_dialog_width">260dp</dimen>
+    <dimen name="ogya_default_margin">16dp</dimen>
 </resources>
