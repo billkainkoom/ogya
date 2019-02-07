@@ -5,8 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import android.text.InputType
 import android.widget.Toast
 import com.billkainkoom.appcomponents.databinding.AnimalBinding
@@ -26,20 +26,20 @@ object ListableTypes {
     val Furniture = ListableType(R.layout.furniture)
 }
 
-data class MyPerson(val name: String = "", val email: String = "", val type: ListableType = ListableTypes.Person) : Listable {
+data class MyPerson(val name: String = "", val email: String = "", val type: ListableType = ListableTypes.Person) : Listable() {
     override fun getListableType(): ListableType? {
 
         return type
     }
 }
 
-data class Animal(val name: String = "", val specie: String = "") : Listable {
+data class Animal(val name: String = "", val specie: String = "") : Listable() {
     override fun getListableType(): ListableType? {
         return ListableTypes.Animal
     }
 }
 
-data class Furniture(val name: String = "", val specie: String = "") : Listable {
+data class Furniture(val name: String = "", val specie: String = "") : Listable() {
     override fun getListableType(): ListableType? {
         return ListableType(R.layout.furniture)
     }

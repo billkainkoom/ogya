@@ -17,7 +17,7 @@ data class QuickFormInputElement(
         val hint: String = "",
         val type: QuickFormInputType = QuickFormInputType.Input,
         val oflistableType: ListableType = OgyaListableTypes.QuickFormInput
-) : Listable {
+) : Listable() {
 
     override fun getListableType(): ListableType? {
         return oflistableType

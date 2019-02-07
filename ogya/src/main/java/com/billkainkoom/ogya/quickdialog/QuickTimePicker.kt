@@ -2,7 +2,7 @@ package com.billkainkoom.ogya.quickdialog
 
 import android.app.Dialog
 import android.content.Context
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.view.LayoutInflater
 import android.view.Window
 import com.billkainkoom.ogya.R

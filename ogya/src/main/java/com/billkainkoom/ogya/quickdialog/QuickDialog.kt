@@ -2,9 +2,9 @@ package com.billkainkoom.ogya.quickdialog
 
 import android.app.Dialog
 import android.content.Context
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.graphics.drawable.BitmapDrawable
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.Html
 import android.text.InputFilter
 import android.util.Log

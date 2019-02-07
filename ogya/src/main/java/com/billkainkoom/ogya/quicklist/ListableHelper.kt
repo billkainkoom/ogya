@@ -1,9 +1,10 @@
 package com.billkainkoom.ogya.quicklist
 
 import android.content.Context
-import android.databinding.ViewDataBinding
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 object ListableHelper {
 
@@ -12,9 +13,12 @@ object ListableHelper {
                                 listables: MutableList<T>,
                                 listableType: ListableType,
                                 listableBindingListener: (T, ViewDataBinding, Int) -> Unit = { x, y, z -> },
-                                listableClickedListener: (T, ViewDataBinding,Int) -> Unit = { x, y,z -> },
+                                listableClickedListener: (T, ViewDataBinding, Int) -> Unit = { x, y, z -> },
                                 layoutManagerType: LayoutManager = LayoutManager.Vertical,
-                                stackFromEnd: Boolean = false
+                                stackFromEnd: Boolean = false,
+                                gridSize: Int = 0,
+                                useCustomSpan: Boolean = false
+
     ): ListableAdapter<T> {
 
 
@@ -35,27 +39,33 @@ object ListableHelper {
                     (recyclerView.layoutManager as LinearLayoutManager).stackFromEnd = true
                 }
             }
+            LayoutManager.Grid -> {
+                recyclerView.layoutManager = GridLayoutManager(context, gridSize)
+                if (useCustomSpan) {
+                    (recyclerView.layoutManager as GridLayoutManager).spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                        override
+
+                        fun getSpanSize(position: Int): Int {
+                            return gridSize / listables[position].span
+                        }
+                    }
+                }
+
+            }
         }
 
         val adapter = ListableAdapter(context, listableType, listables,
                 listableBindingListener = { listable, listableBinding, position ->
                     listableBindingListener(listable, listableBinding, position)
-                }, listableClickedListener = { listable,listableBinding, position ->
+                }, listableClickedListener = { listable, listableBinding, position ->
             //do something on card clicked
-            listableClickedListener(listable,listableBinding, position)
+            listableClickedListener(listable, listableBinding, position)
         })
 
         recyclerView.adapter = adapter
+        adapter.submitList(listables)
 
         return adapter
-
-
-        /*if (listObjects.size == 0) {
-            card_objects.visibility = View.GONE
-            empty.visibility = View.VISIBLE
-            header.text = "No Invitation Card"
-            sub_header.text = "You have not uploaded any images. Please click on the + button to add one now."
-        }*/
     }
 
 }

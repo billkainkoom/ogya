@@ -1,6 +1,6 @@
 package com.billkainkoom.ogya.quicklist
 
-import android.databinding.ViewDataBinding
+import androidx.databinding.ViewDataBinding
 
 abstract class BaseComponent<V : ViewDataBinding, L : Listable> {
 
