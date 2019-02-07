@@ -25,15 +25,15 @@ class QuickDatePicker(val context: Context) {
         quickDialogDatePickerBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.quick_dialog_date_picker, null, false)
         dialog.setContentView(quickDialogDatePickerBinding.root)
 
-        quickDialogDatePickerBinding.negativeButton.setOnClickListener({ v -> dismiss() })
+        quickDialogDatePickerBinding.negativeButton.setOnClickListener { v -> dismiss() }
     }
 
     fun show(dateSelected: (String) -> Unit) {
-        quickDialogDatePickerBinding.positiveButton.setOnClickListener({ v ->
+        quickDialogDatePickerBinding.positiveButton.setOnClickListener { v ->
             val date = quickDialogDatePickerBinding.datePicker.year.toString() + "-" + decimalFormat.format((quickDialogDatePickerBinding.datePicker.month + 1).toLong()) + "-" + decimalFormat.format(quickDialogDatePickerBinding.datePicker.dayOfMonth.toLong())
             dateSelected(date)
             dismiss()
-        })
+        }
         dialog.show()
     }
 
