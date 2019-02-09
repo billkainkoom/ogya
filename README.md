@@ -203,6 +203,7 @@ __loadList__ returns a __ListableAdapter<T>__ that you can use to add or remove 
 
 | Method                                   | Purpose                                                                            |
 |------------------------------------------|------------------------------------------------------------------------------------|
+| submitList(list: MutableList<T>)         | Submits list to ListableAdapter -> Which would use diffutils to calculate changes and render results. This method is called in ListableHelper.loadList, so only use it when you want to update your list. It supersedes all other change (eg . Add , Remove , Replace etc ...) calls. |
 | removeAt(position: Int)                  | Removes listable at a position                                                     |
 | addAt(position: Int, listable: T)        | Add a listable at position                                                         |
 | replaceAt(position: Int, listable: T)    | Replace listable at position                                                       |
