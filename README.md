@@ -158,7 +158,7 @@ abstract class Listable(@Transient val identifier: String = "", @Transient val s
 }
 ```
 
-The ```identifier``` is used by the diffUtils to find out which objects are the same and those that have changed in the case of an update (When you submit new a new List using ```listableAdapter.submitList(list)```).
+The ```identifier``` is used by the diffUtils to find out which objects are the same and those that have changed in the case of an update (When you submit a new List using ```listableAdapter.submitList(list)```).
 The ```span``` is used when you want to have dynamic span lengths when using  ```LayoutManager.Grid``` to display your list. This helps you to create a list with items having different spans on different rows.
 
 ```@Transient``` : Marks the JVM backing field of the annotated property as transient, meaning that it is not part of the default serialized form of the object.
