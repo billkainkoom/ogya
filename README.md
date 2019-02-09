@@ -158,6 +158,9 @@ abstract class Listable(@Transient val identifier: String = "", @Transient val s
 }
 ```
 
+The identifier is used by the diffUtils wto find out whuch objects are the same and those that have changed in the case of an update (When you submit new a new List using ```listableAdapter.submitList(list)```).
+The span is used when you want to have dynamic span lengths when using  ```LayoutManager.Grid``` to display your list. This helps you to create a list with items having different spans on different rows.
+
 ### ListableType
 The listable type is a simple class that tells listable adapter what type of layout to use.
 Its defined as
