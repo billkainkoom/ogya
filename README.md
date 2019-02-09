@@ -203,14 +203,14 @@ __loadList__ returns a __ListableAdapter<T>__ that you can use to add or remove 
 
 | Method                                   | Purpose                                                                            |
 |------------------------------------------|------------------------------------------------------------------------------------|
-| submitList(list: MutableList<T>)         | Submits list to ListableAdapter -> Which would use diffutils to calculate changes and render results. This method is called in ListableHelper.loadList, so only use it when you want to update your list. It supersedes all other change (eg . Add , Remove , Replace etc ...) calls. |
-| removeAt(position: Int)                  | Removes listable at a position                                                     |
-| addAt(position: Int, listable: T)        | Add a listable at position                                                         |
-| replaceAt(position: Int, listable: T)    | Replace listable at position                                                       |
-| addAt(position: Int, vararg listable: T) | Add listable(s) at position eg listableAdapter<T>.addAt(2,listable1,listable2,...) |
-| addAt(position: Int, newListables: List) | Add listable(s) at position                                                        |
-| add(newListables: List)                  | Add listable(s). This would add to bottom of the list                              |
-| add(listable: T)                         | Add listable. This would add to bottom of the list                                 |
+| ```submitList(list: MutableList<T>)```         | Submits list to ListableAdapter -> Which would use diffutils to calculate changes and render results. This method is called in ListableHelper.loadList, so only use it when you want to update your list. It supersedes all other change (eg . Add , Remove , Replace etc ...) calls. |
+| ```removeAt(position: Int)```                 | Removes listable at a position                                                     |
+| ```addAt(position: Int, listable: T)```        | Add a listable at position                                                         |
+| ```replaceAt(position: Int, listable: T)```    | Replace listable at position                                                       |
+| ```addAt(position: Int, vararg listable: T)``` | Add listable(s) at position eg listableAdapter<T>.addAt(2,listable1,listable2,...) |
+| ```addAt(position: Int, newListables: List)``` | Add listable(s) at position                                                        |
+| ```add(newListables: List)```                  | Add listable(s). This would add to bottom of the list                              |
+| ```add(listable: T)```                         | Add listable. This would add to bottom of the list                                 |
 
 
 ## Quick Dialog
