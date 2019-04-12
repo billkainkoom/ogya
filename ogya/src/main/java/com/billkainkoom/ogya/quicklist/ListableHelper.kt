@@ -46,7 +46,7 @@ object ListableHelper {
                         override
 
                         fun getSpanSize(position: Int): Int {
-                            return gridSize / listables[position].span
+                            return (gridSize.toDouble() / listables[position].span).toInt()
                         }
                     }
                 }
