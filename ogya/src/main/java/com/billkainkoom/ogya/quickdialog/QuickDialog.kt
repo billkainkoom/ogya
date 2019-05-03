@@ -70,7 +70,7 @@ class QuickDialog(
         })
     }
 
-    fun switchStyle(style: QuickDialogType):QuickDialog {
+    fun switchStyle(style: QuickDialogType): QuickDialog {
         when (style) {
             QuickDialogType.Progress -> {
                 quickDialogBinding?.image?.visibility = View.GONE
@@ -117,11 +117,11 @@ class QuickDialog(
         return this
     }
 
-    fun setData(title: String,message: String,image: Int):QuickDialog{
+    fun setData(title: String, message: String, image: Int): QuickDialog {
         setDialogTitle(title)
         setDialogMessage(message)
         setDialogImage(image)
-        return  this
+        return this
     }
 
     private fun setDialogImage(image: Int) {
@@ -224,6 +224,11 @@ class QuickDialog(
             Log.e(TAG, "Invalid input type")
             e.printStackTrace()
         }
+        return this
+    }
+
+    fun setInputText(text: String): QuickDialog {
+        quickDialogBinding?.input?.setText(text)
         return this
     }
 
