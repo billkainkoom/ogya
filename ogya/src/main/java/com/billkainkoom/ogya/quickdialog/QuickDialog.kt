@@ -13,6 +13,7 @@ import android.view.View
 import android.view.Window
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import com.billkainkoom.ogya.R
 import com.billkainkoom.ogya.databinding.QuickDialogBinding
 
@@ -34,6 +35,7 @@ class QuickDialog(
 
 
     val inputText: String get() = quickDialogBinding?.input?.text.toString()
+    val input : EditText? get() = quickDialogBinding?.input
     var optionSelectedPosition = 0
     var optionSelectedValue = ""
 
