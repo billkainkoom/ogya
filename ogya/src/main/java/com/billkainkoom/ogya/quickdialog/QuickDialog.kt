@@ -34,8 +34,8 @@ class QuickDialog(
     private var quickDialogBinding: QuickDialogBinding? = null
 
 
-    val inputText: String get() = quickDialogBinding?.input?.text.toString()
     val input : EditText? get() = quickDialogBinding?.input
+    val inputText: String get() = quickDialogBinding?.input?.text.toString()
     var optionSelectedPosition = 0
     var optionSelectedValue = ""
 
