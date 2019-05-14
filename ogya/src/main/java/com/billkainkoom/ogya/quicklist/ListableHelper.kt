@@ -70,15 +70,14 @@ object ListableHelper {
     }
 
     fun <T : Listable> loadPagerList(context: Context,
-                                recyclerView: RecyclerView,
-                                listables: PagedList<T>,
-                                listableType: ListableType,
-                                listableBindingListener: (T, ViewDataBinding, Int) -> Unit = { x, y, z -> },
-                                listableClickedListener: (T, ViewDataBinding, Int) -> Unit = { x, y, z -> },
-                                layoutManagerType: LayoutManager = LayoutManager.Vertical,
-                                stackFromEnd: Boolean = false,
-                                gridSize: Int = 0,
-                                useCustomSpan: Boolean = false
+                                     recyclerView: RecyclerView,
+                                     listableType: ListableType,
+                                     listableBindingListener: (T, ViewDataBinding, Int) -> Unit = { x, y, z -> },
+                                     listableClickedListener: (T, ViewDataBinding, Int) -> Unit = { x, y, z -> },
+                                     layoutManagerType: LayoutManager = LayoutManager.Vertical,
+                                     stackFromEnd: Boolean = false,
+                                     gridSize: Int = 0,
+                                     useCustomSpan: Boolean = false
 
     ): ListablePagerAdapter<T> {
 
@@ -102,20 +101,10 @@ object ListableHelper {
             }
             LayoutManager.Grid -> {
                 recyclerView.layoutManager = GridLayoutManager(context, gridSize)
-                if (useCustomSpan) {
-                    (recyclerView.layoutManager as GridLayoutManager).spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                        override
-
-                        fun getSpanSize(position: Int): Int {
-                            return (gridSize.toDouble() / (listables[position]?.span ?: 1.0)).toInt()
-                        }
-                    }
-                }
-
-            }
+            }else->{}
         }
 
-        val adapter = ListablePagerAdapter(context, listableType, listables,
+        val adapter = ListablePagerAdapter<T>(context, listableType,
                 listableBindingListener = { listable, listableBinding, position ->
                     listableBindingListener(listable, listableBinding, position)
                 }, listableClickedListener = { listable, listableBinding, position ->
@@ -124,7 +113,22 @@ object ListableHelper {
         })
 
         recyclerView.adapter = adapter
-        adapter.submitList(listables)
+
+        if(layoutManagerType == LayoutManager.Grid){
+            if (useCustomSpan) {
+                (recyclerView.layoutManager as GridLayoutManager).spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                    override
+
+                    fun getSpanSize(position: Int): Int {
+                        val numerator = gridSize.toDouble()
+                        val denominator = (adapter.currentList!![position]?.span
+                                ?: 1.0)
+
+                        return (numerator / denominator).toInt()
+                    }
+                }
+            }
+        }
 
         return adapter
     }
