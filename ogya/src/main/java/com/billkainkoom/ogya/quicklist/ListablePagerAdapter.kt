@@ -20,7 +20,6 @@ import com.billkainkoom.ogya.shared.QuickAsync
 class ListablePagerAdapter<T : Listable> internal constructor(
         private val context: Context,
         private val listableType: ListableType,
-        var listables: MutableList<T>,
         private val listableBindingListener: (T, ViewDataBinding, Int) -> Unit,
         private val listableClickedListener: (T, ViewDataBinding, Int) -> Unit)
     : PagedListAdapter<T, ListablePagerAdapter<T>.ListableViewHolder>(ListableAdapterDiffCallback<T>()) {
