@@ -46,11 +46,11 @@ fun EditText.watch(afterTextChanged: (text: String) -> Unit) {
         }
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-
+            afterTextChanged(this@watch.text.toString())
         }
 
         override fun afterTextChanged(s: Editable) {
-            afterTextChanged(this@watch.text.toString())
+
         }
     })
 }

@@ -1,5 +1,6 @@
 package com.billkainkoom.ogya.shared
 
+import android.text.InputType
 import com.billkainkoom.ogya.quicklist.Listable
 import com.billkainkoom.ogya.quicklist.ListableType
 
@@ -15,11 +16,13 @@ data class QuickFormInputElement(
         var value: String = "",
         val placeholder: String = "",
         val hint: String = "",
+        val inputLength : Int = 1000,
+        val inputType : Int = InputType.TYPE_CLASS_TEXT,
         val type: QuickFormInputType = QuickFormInputType.Input,
-        val oflistableType: ListableType = OgyaListableTypes.QuickFormInput
+        val ofListableType: ListableType = OgyaListableTypes.QuickFormInput
 ) : Listable() {
 
     override fun getListableType(): ListableType? {
-        return oflistableType
+        return ofListableType
     }
 }

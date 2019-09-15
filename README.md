@@ -542,9 +542,158 @@ ListableHelper.loadList(
 This makes it easy to reuse code. As long as dependencies are provided for render, the components can be recreated with its expected behavior.
 
 
+# Ogya Forms
+There are hardly any android apps built without forms. It can be daunting especially when you have forms all over the place. 
+Usually they lead to never ending xml files or really long xml files. And then there is the case where the form contains other elements
+which are not inputs eg info cards, images etc. Most at times we will just repeat the form code in all xmls that they are needed in
+or probably use the include tag (but there is no for-loop for <include> (not that I know of though.)). We have already achieved 
+component reuse by Componentization in Ogya. All we needed to do was to 
 
-**BaseComponents** are found in Ogya : 0.54
+## Add a component that can accept input.
+ ```kotlin
+ enum class QuickFormInputType {
+     Input,
+     Date,
+     Time
+ }
+ 
+ data class QuickFormInputElement(
+         val name: String = "",
+         var value: String = "",
+         val placeholder: String = "",
+         val hint: String = "",
+         val inputLength : Int = 1000,
+         val inputType : Int = InputType.TYPE_CLASS_TEXT,
+         val type: QuickFormInputType = QuickFormInputType.Input,
+         val ofListableType: ListableType = OgyaListableTypes.QuickFormInput
+ ) : Listable() {
+ 
+     override fun getListableType(): ListableType? {
+         return ofListableType
+     }
+ }
+ ```
 
+I see the confusion in **type** and **inputType**. So lets break that down.
+
+**type** 
+This just toggles between date,time and input. Basically they are all inputs but **time** gives you the 
+opportunity to select from the android TimePicker, **date** also does the same but gives you a DatePicker instead.
+Both type **time** and **date** gives you an un-editable input. Type input allows you to use the keyboard as the input source.
+
+
+
+
+## Decide the keyboard type based on the input.
+```kotlin
+private fun handleInputType(binding: ComponentQuickFormInputBinding,listable: QuickFormInputElement) {
+        binding.input.enableEditing(true)
+        binding.input.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(listable.inputLength))
+        toggleButtonVisibility(binding, false)
+
+        try {
+            binding.input.inputType = listable.inputType
+        } catch (e: Exception) {
+            Log.e("QuickForm", "Invalid input type")
+            e.printStackTrace()
+        }
+    }
+```
+
+As you can see the **inputType** parameter expects the android textInput type. Pass any of these and you will get its respective
+keyboard. 
+
+```kotlin
+object ComponentQuickFormInput : BaseComponent<ComponentQuickFormInputBinding, QuickFormInputElement>() {
+
+    override fun render(binding: ComponentQuickFormInputBinding, listable: QuickFormInputElement) {
+        binding.input.setText(listable.value)
+        binding.inputLayout.hint = listable.hint
+
+        binding.input.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.input.hint = listable.placeholder
+            } else {
+                binding.input.hint = ""
+            }
+        }
+
+
+
+        when (listable.type) {
+            QuickFormInputType.Input -> {
+                handleInputType(binding,listable)
+            }
+            QuickFormInputType.Date -> {
+                handleDateType(binding)
+            }
+            QuickFormInputType.Time -> {
+                handleTimeType(binding)
+            }
+        }
+    }
+}
+```
+
+3. Add a watcher to track value changes of input element.
+```kotlin
+  inner class ListableViewHolder(val viewBinding: ViewDataBinding) : RecyclerView.ViewHolder(viewBinding.root) {
+
+        init {
+            viewBinding.root.setOnClickListener { listableClickedListener(getItem(adapterPosition), viewBinding, adapterPosition) }
+
+            //form functionality
+            (viewBinding.root.findViewWithTag<View>("input") as? EditText)?.let { input->
+                input.watch { text ->
+                    if(getItem(adapterPosition) is QuickFormInputElement){
+                        (getItem(adapterPosition) as QuickFormInputElement).value = text
+                    }
+                }
+            }
+        }
+    }
+```
+
+This means you can pass any layout you prefer. Just make sure of the following. 
+
+1. The layout has an **EditText** with **tag** "input". If absent the watcher wont recognize any changes since its only watching
+for changes on an EditText with tag **input**.
+
+2. Your component's signature is
+```kotlin
+object Component : BaseComponent<ComponentBinding, QuickFormInputElement>() {
+    
+}
+```
+
+
+ListableAdapter has been extended with one more function : **retrieveFormValues**
+```kotlin
+fun retrieveFormValues() : HashMap<String,String>{
+        val formData = hashMapOf<String,String>()
+        for(listable in listables){
+            if(listable is QuickFormInputElement){
+                formData[listable.name] = listable.value
+            }
+        }
+        return formData
+}
+```
+
+And you use it like this: 
+```kotlin
+binding.submit.setOnClickListener {
+      var results : HashMap<String,String> = adapter.retrieveFormValues()
+}
+```
+
+And that's it! 
+
+![](https://github.com/billkainkoom/ogya/blob/master/images/time_picker.png)
+![](https://github.com/billkainkoom/ogya/blob/master/images/date_picker.png)
+![](https://github.com/billkainkoom/ogya/blob/master/images/form.png)
+![](https://github.com/billkainkoom/ogya/blob/master/images/form_results.png)
+   
 ```groovy
-	dependencies { implementation 'com.github.billkainkoom:ogya:0.54' }
+	dependencies { implementation 'com.github.billkainkoom:ogya:0.70' }
 ```

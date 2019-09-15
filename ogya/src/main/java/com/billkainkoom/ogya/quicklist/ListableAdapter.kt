@@ -1,14 +1,17 @@
 package com.billkainkoom.ogya.quicklist
 
 import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import com.billkainkoom.ogya.shared.QuickAsync
+import com.billkainkoom.ogya.extentions.watch
+import com.billkainkoom.ogya.shared.QuickFormInputElement
 
 /**
  * Created by  Bill Kwaku Ansah Inkoom on 6/22/2015.
@@ -59,7 +62,26 @@ class ListableAdapter<T : Listable> internal constructor(
 
         init {
             viewBinding.root.setOnClickListener { listableClickedListener(getItem(adapterPosition), viewBinding, adapterPosition) }
+
+            //form functionality
+            (viewBinding.root.findViewWithTag<View>("input") as? EditText)?.let { input->
+                input.watch { text ->
+                    if(getItem(adapterPosition) is QuickFormInputElement){
+                        (getItem(adapterPosition) as QuickFormInputElement).value = text
+                    }
+                }
+            }
         }
+    }
+
+    fun retrieveFormValues() : HashMap<String,String>{
+        val formData = hashMapOf<String,String>()
+        for(listable in listables){
+            if(listable is QuickFormInputElement){
+                formData[listable.name] = listable.value
+            }
+        }
+        return formData
     }
 
     fun removeAt(position: Int) {

@@ -2,9 +2,12 @@ package com.billkainkoom.appcomponents
 
 import android.content.Context
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
+import android.text.InputType
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
+import com.billkainkoom.appcomponents.databinding.ActivityFormBinding
 import com.billkainkoom.appcomponents.databinding.AnimalBinding
 import com.billkainkoom.appcomponents.databinding.FurnitureBinding
 import com.billkainkoom.appcomponents.databinding.PersonBinding
@@ -20,13 +23,19 @@ import com.billkainkoom.ogya.shared.QuickFormInputType
 
 class FormActivity : AppCompatActivity() {
 
+    var results = hashMapOf<String,String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_form)
+        val binding : ActivityFormBinding  = DataBindingUtil.setContentView(this,R.layout.activity_form)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
         val cardObjects: RecyclerView = findViewById(R.id.card_objects)
-        loadList(this, cardObjects)
+        val adapter = loadList(this, cardObjects)
+
+        binding.submit.setOnClickListener {
+            var results : HashMap<String,String> = adapter.retrieveFormValues()
+        }
+
     }
 
     fun loadList(context: Context, recyclerView: RecyclerView): ListableAdapter<Listable> {
@@ -54,62 +63,24 @@ class FormActivity : AppCompatActivity() {
                         name = "address",
                         value = "",
                         hint = "Address",
-                        placeholder = "Kasoa 212 LP"
+                        placeholder = "Kasoa 212 LP",
+                        inputType = InputType.TYPE_CLASS_NUMBER
                 ),
                 QuickFormInputElement(
                         name = "phone_number",
                         value = "",
                         hint = "Phone Number",
-                        placeholder = "0266 175 924"
-                ),
-                QuickFormInputElement(
-                        name = "date",
-                        value = "",
-                        hint = "Date",
-                        placeholder = "22-01-1992",
-                        type = QuickFormInputType.Date
-                ),
-                QuickFormInputElement(
-                        name = "time",
-                        value = "",
-                        hint = "Time",
-                        placeholder = "17:00",
-                        type = QuickFormInputType.Time
+                        placeholder = "0266 175 924",
+                        inputType = InputType.TYPE_CLASS_PHONE
                 ),
                 MyPerson(name = "Adwoa Lee", email = "adwoalee@gmail.com"),
                 QuickFormInputElement(
-                        name = "firstname",
-                        value = "",
-                        hint = "Firstname",
-                        placeholder = "Kwame"
-                ),
-                QuickFormInputElement(
-                        name = "lastname",
-                        value = "",
-                        hint = "Lastname",
-                        placeholder = "Lee"
-                ),
-                QuickFormInputElement(
-                        name = "address",
-                        value = "",
-                        hint = "Address",
-                        placeholder = "Kasoa 212 LP"
-                ),
-                Animal(name = "Cassava", specie = "Plantae"),
-                QuickFormInputElement(
-                        name = "phone_number",
-                        value = "",
-                        hint = "Phone Number",
-                        placeholder = "0266 175 924"
-                ),
-                QuickFormInputElement(
                         name = "date",
                         value = "",
                         hint = "Date",
                         placeholder = "22-01-1992",
                         type = QuickFormInputType.Date
                 ),
-                Furniture(name = "Cat", specie = "Felidae"),
                 QuickFormInputElement(
                         name = "time",
                         value = "",
@@ -129,7 +100,7 @@ class FormActivity : AppCompatActivity() {
                 listableBindingListener = { listable, listableBinding, position ->
                     when (listable.getListableType()) {
                         OgyaListableTypes.QuickFormInput -> {
-                            ComponentQuickFormInput.render(listableBinding as ComponentQuickFormInputBinding, listable as QuickFormInputElement,a,position)
+                            ComponentQuickFormInput.render(listableBinding as ComponentQuickFormInputBinding, listable as QuickFormInputElement)
                         }
                         ListableTypes.Person -> {
                             MyPersonComponent.render(listableBinding as PersonBinding, listable as MyPerson)

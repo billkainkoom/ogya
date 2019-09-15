@@ -5,18 +5,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
 import android.text.InputType
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.billkainkoom.appcomponents.databinding.AnimalBinding
 import com.billkainkoom.appcomponents.databinding.FurnitureBinding
 import com.billkainkoom.appcomponents.databinding.PersonBinding
 import com.billkainkoom.ogya.quickdialog.QuickDialog
 import com.billkainkoom.ogya.quickdialog.QuickDialogType
-import com.billkainkoom.ogya.shared.QuickObject
 import com.billkainkoom.ogya.quicklist.*
 import com.billkainkoom.ogya.quickpermissions.PermissionHelper
+import com.billkainkoom.ogya.shared.QuickObject
 import kotlinx.android.synthetic.main.activity_main.*
 
 
