@@ -549,7 +549,7 @@ which are not inputs eg info cards, images etc. Most at times we will just repea
 or probably use the include tag (but there is no for-loop for <include> (not that I know of though.)). We have already achieved 
 component reuse by Componentization in Ogya. All we needed to do was to 
 
-## Add a component that can accept input.
+### 1. Add a component that can accept input.
  ```kotlin
  enum class QuickFormInputType {
      Input,
@@ -584,7 +584,7 @@ Both type **time** and **date** gives you an un-editable input. Type input allow
 
 
 
-## Decide the keyboard type based on the input.
+### 2. Decide the keyboard type based on the input.
 ```kotlin
 private fun handleInputType(binding: ComponentQuickFormInputBinding,listable: QuickFormInputElement) {
         binding.input.enableEditing(true)
@@ -635,7 +635,7 @@ object ComponentQuickFormInput : BaseComponent<ComponentQuickFormInputBinding, Q
 }
 ```
 
-3. Add a watcher to track value changes of input element.
+### 3. Add a watcher to track value changes of input element.
 ```kotlin
   inner class ListableViewHolder(val viewBinding: ViewDataBinding) : RecyclerView.ViewHolder(viewBinding.root) {
 
