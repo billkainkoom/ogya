@@ -549,7 +549,7 @@ which are not inputs eg info cards, images etc. Most at times we will just repea
 or probably use the include tag (but there is no for-loop for <include> (not that I know of though.)). We have already achieved 
 component reuse by Componentization in Ogya. All we needed to do was to 
 
-## Add a component that can accept input.
+### 1. Add a component that can accept input.
  ```kotlin
  enum class QuickFormInputType {
      Input,
@@ -584,7 +584,7 @@ Both type **time** and **date** gives you an un-editable input. Type input allow
 
 
 
-## Decide the keyboard type based on the input.
+### 2. Decide the keyboard type based on the input.
 ```kotlin
 private fun handleInputType(binding: ComponentQuickFormInputBinding,listable: QuickFormInputElement) {
         binding.input.enableEditing(true)
@@ -635,7 +635,7 @@ object ComponentQuickFormInput : BaseComponent<ComponentQuickFormInputBinding, Q
 }
 ```
 
-3. Add a watcher to track value changes of input element.
+### 3. Add a watcher to track value changes of input element.
 ```kotlin
   inner class ListableViewHolder(val viewBinding: ViewDataBinding) : RecyclerView.ViewHolder(viewBinding.root) {
 
@@ -682,16 +682,104 @@ fun retrieveFormValues() : HashMap<String,String>{
 
 And you use it like this: 
 ```kotlin
-binding.submit.setOnClickListener {
-      var results : HashMap<String,String> = adapter.retrieveFormValues()
-}
+fun loadList(context: Context,binding:ActivityFormBinding, recyclerView: RecyclerView): ListableAdapter<Listable> {
+        val form = mutableListOf(
+                QuickFormInputElement(
+                        name = "time",
+                        value = "",
+                        hint = "Time",
+                        placeholder = "17:00",
+                        type = QuickFormInputType.Time
+                ),
+                QuickFormInputElement(
+                        name = "firstname",
+                        value = "",
+                        hint = "Firstname",
+                        placeholder = "Kwame"
+                ),
+                QuickFormInputElement(
+                        name = "lastname",
+                        value = "",
+                        hint = "Lastname",
+                        placeholder = "Lee"
+                ),
+                QuickFormInputElement(
+                        name = "address",
+                        value = "",
+                        hint = "Address",
+                        placeholder = "Kasoa 212 LP",
+                        inputType = InputType.TYPE_CLASS_NUMBER
+                ),
+                QuickFormInputElement(
+                        name = "phone_number",
+                        value = "",
+                        hint = "Phone Number",
+                        placeholder = "0266 175 924",
+                        inputType = InputType.TYPE_CLASS_PHONE
+                ),
+                MyPerson(name = "Adwoa Lee", email = "adwoalee@gmail.com"),
+                QuickFormInputElement(
+                        name = "date",
+                        value = "",
+                        hint = "Date",
+                        placeholder = "22-01-1992",
+                        type = QuickFormInputType.Date
+                ),
+                QuickFormInputElement(
+                        name = "time",
+                        value = "",
+                        hint = "Time",
+                        placeholder = "17:00",
+                        type = QuickFormInputType.Time
+                )
+        )
+
+
+        var adapter : ListableAdapter<Listable>? = null
+        adapter = ListableHelper.loadList(
+                context = context,
+                recyclerView = recyclerView,
+                listableType = ListableTypes.Person,
+                listables = form,
+                listableBindingListener = { listable, listableBinding, position ->
+                    when (listable.getListableType()) {
+                        OgyaListableTypes.QuickFormInput -> {
+                            ComponentQuickFormInput.render(listableBinding as ComponentQuickFormInputBinding, listable as QuickFormInputElement)
+                        }
+                        ListableTypes.Person -> {
+                            MyPersonComponent.render(listableBinding as PersonBinding, listable as MyPerson)
+                        }
+                        ListableTypes.Animal -> {
+                            AnimalComponent.render(listableBinding as AnimalBinding, listable as Animal)
+                        }
+                        ListableTypes.Furniture -> {
+                            FurnitureComponent.render(listableBinding as FurnitureBinding, listable as Furniture)
+                        }
+                    }
+
+                },
+                listableClickedListener = { listable, listableBinding, position ->
+
+                },
+                layoutManagerType = LayoutManager.Vertical
+        )
+
+        binding.submit.setOnClickListener {
+            var results : HashMap<String,String> = adapter.retrieveFormValues()
+        }
+
+        return adapter
+    }
 ```
 
 And that's it! 
 
 ![](https://github.com/billkainkoom/ogya/blob/master/images/time_picker.png)
+
 ![](https://github.com/billkainkoom/ogya/blob/master/images/date_picker.png)
+
 ![](https://github.com/billkainkoom/ogya/blob/master/images/form.png)
+
 ![](https://github.com/billkainkoom/ogya/blob/master/images/form_results.png)
    
 ```groovy

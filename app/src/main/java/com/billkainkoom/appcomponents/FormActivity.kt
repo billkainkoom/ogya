@@ -30,16 +30,12 @@ class FormActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
         val cardObjects: RecyclerView = findViewById(R.id.card_objects)
-        val adapter = loadList(this, cardObjects)
-
-        binding.submit.setOnClickListener {
-            var results : HashMap<String,String> = adapter.retrieveFormValues()
-        }
+        val adapter = loadList(this, binding,cardObjects)
 
     }
 
-    fun loadList(context: Context, recyclerView: RecyclerView): ListableAdapter<Listable> {
-        val people = mutableListOf(
+    fun loadList(context: Context,binding:ActivityFormBinding, recyclerView: RecyclerView): ListableAdapter<Listable> {
+        val form = mutableListOf(
                 QuickFormInputElement(
                         name = "time",
                         value = "",
@@ -91,12 +87,12 @@ class FormActivity : AppCompatActivity() {
         )
 
 
-        var a : ListableAdapter<Listable>? = null
-        a = ListableHelper.loadList(
+        var adapter : ListableAdapter<Listable>? = null
+        adapter = ListableHelper.loadList(
                 context = context,
                 recyclerView = recyclerView,
                 listableType = ListableTypes.Person,
-                listables = people,
+                listables = form,
                 listableBindingListener = { listable, listableBinding, position ->
                     when (listable.getListableType()) {
                         OgyaListableTypes.QuickFormInput -> {
@@ -120,7 +116,11 @@ class FormActivity : AppCompatActivity() {
                 layoutManagerType = LayoutManager.Vertical
         )
 
-        return a
+        binding.submit.setOnClickListener {
+            var results : HashMap<String,String> = adapter.retrieveFormValues()
+        }
+
+        return adapter
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
