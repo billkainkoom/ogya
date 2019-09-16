@@ -550,14 +550,14 @@ or probably use the include tag (but there is no for-loop for <include> (not tha
 component reuse by Componentization in Ogya. All we needed to do was to 
 
 ### 1. Add a component that can accept input.
- ```kotlin
- enum class QuickFormInputType {
+```kotlin
+enum class QuickFormInputType {
      Input,
      Date,
      Time
  }
  
- data class QuickFormInputElement(
+data class QuickFormInputElement(
          val name: String = "",
          var value: String = "",
          val placeholder: String = "",
