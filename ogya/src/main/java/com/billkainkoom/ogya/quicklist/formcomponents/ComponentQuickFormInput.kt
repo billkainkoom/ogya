@@ -33,7 +33,7 @@ object ComponentQuickFormInput : BaseComponent<ComponentQuickFormInputBinding, Q
 
         when (listable.type) {
             QuickFormInputType.Input -> {
-                handleInputType(binding,listable)
+                handleInputType(binding, listable)
             }
             QuickFormInputType.Date -> {
                 handleDateType(binding)
@@ -52,10 +52,19 @@ object ComponentQuickFormInput : BaseComponent<ComponentQuickFormInputBinding, Q
         }
     }
 
-    private fun handleInputType(binding: ComponentQuickFormInputBinding,listable: QuickFormInputElement) {
+    private fun handleInputType(binding: ComponentQuickFormInputBinding, listable: QuickFormInputElement) {
         binding.input.enableEditing(true)
         binding.input.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(listable.inputLength))
-        toggleButtonVisibility(binding, false)
+        if (listable.actionButton != null) {
+            toggleButtonVisibility(binding, true)
+            binding.button.setImageResource(listable.actionButton.image)
+            binding.button.setOnClickListener {
+                listable.actionButton.handler()
+            }
+        } else {
+            toggleButtonVisibility(binding, false)
+        }
+
 
         try {
             binding.input.inputType = listable.inputType
