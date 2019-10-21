@@ -23,18 +23,18 @@ import com.billkainkoom.ogya.shared.QuickFormInputType
 
 class FormActivity : AppCompatActivity() {
 
-    var results = hashMapOf<String,String>()
+    var results = hashMapOf<String, String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding : ActivityFormBinding  = DataBindingUtil.setContentView(this,R.layout.activity_form)
+        val binding: ActivityFormBinding = DataBindingUtil.setContentView(this, R.layout.activity_form)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
         val cardObjects: RecyclerView = findViewById(R.id.card_objects)
-        val adapter = loadList(this, binding,cardObjects)
+        val adapter = loadList(this, binding, cardObjects)
 
     }
 
-    fun loadList(context: Context,binding:ActivityFormBinding, recyclerView: RecyclerView): ListableAdapter<Listable> {
+    fun loadList(context: Context, binding: ActivityFormBinding, recyclerView: RecyclerView): ListableAdapter<Listable> {
         val form = mutableListOf(
                 QuickFormInputElement(
                         name = "time",
@@ -47,6 +47,7 @@ class FormActivity : AppCompatActivity() {
                         name = "firstname",
                         value = "",
                         hint = "Firstname",
+                        isFocusable = true,
                         placeholder = "Kwame"
                 ),
                 QuickFormInputElement(
@@ -87,7 +88,7 @@ class FormActivity : AppCompatActivity() {
         )
 
 
-        var adapter : ListableAdapter<Listable>? = null
+        var adapter: ListableAdapter<Listable>? = null
         adapter = ListableHelper.loadList(
                 context = context,
                 recyclerView = recyclerView,
@@ -117,7 +118,7 @@ class FormActivity : AppCompatActivity() {
         )
 
         binding.submit.setOnClickListener {
-            var results : HashMap<String,String> = adapter.retrieveFormValues()
+            var results: HashMap<String, String> = adapter.retrieveFormValues()
         }
 
         return adapter

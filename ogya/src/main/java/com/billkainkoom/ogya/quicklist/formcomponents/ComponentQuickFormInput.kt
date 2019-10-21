@@ -20,7 +20,6 @@ object ComponentQuickFormInput : BaseComponent<ComponentQuickFormInputBinding, Q
     override fun render(binding: ComponentQuickFormInputBinding, listable: QuickFormInputElement) {
         binding.input.setText(listable.value)
         binding.inputLayout.hint = listable.hint
-
         binding.input.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 binding.input.hint = listable.placeholder
@@ -29,7 +28,15 @@ object ComponentQuickFormInput : BaseComponent<ComponentQuickFormInputBinding, Q
             }
         }
 
-
+        if (listable.isFocusable) {
+            binding.input.requestFocus()
+            binding.input.isFocusable = listable.isFocusable
+            binding.input.isEnabled = listable.isFocusable
+        } else {
+            binding.input.requestFocus()
+            binding.input.isFocusable = false
+            binding.input.isEnabled = false
+        }
 
         when (listable.type) {
             QuickFormInputType.Input -> {

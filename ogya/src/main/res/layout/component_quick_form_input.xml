@@ -19,6 +19,7 @@
                 android:tag="input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:cursorVisible="true"
                 android:hint="Hint" />
 
         </com.google.android.material.textfield.TextInputLayout>
