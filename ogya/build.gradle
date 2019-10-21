@@ -6,8 +6,6 @@ group='com.github.billkainkoom'
 android {
     compileSdkVersion 28
 
-
-
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 28
