@@ -17,9 +17,7 @@ import com.billkainkoom.ogya.quicklist.Listable
 import com.billkainkoom.ogya.quicklist.ListableAdapter
 import com.billkainkoom.ogya.quicklist.ListableHelper
 import com.billkainkoom.ogya.quicklist.formcomponents.ComponentQuickFormInput
-import com.billkainkoom.ogya.shared.OgyaListableTypes
-import com.billkainkoom.ogya.shared.QuickFormInputElement
-import com.billkainkoom.ogya.shared.QuickFormInputType
+import com.billkainkoom.ogya.shared.*
 
 class FormActivity : AppCompatActivity() {
 
@@ -47,14 +45,19 @@ class FormActivity : AppCompatActivity() {
                         name = "firstname",
                         value = "",
                         hint = "Firstname",
-                        isFocusable = true,
-                        placeholder = "Kwame"
+                        placeholder = "Kwame",
+                        actionButton = ActionButton(image = R.drawable.ic_info_outline_black_24dp,showOnFocus = true){
+
+                        },
+                        inputLength = 5,
+                        listableSpan = 2.0
                 ),
                 QuickFormInputElement(
                         name = "lastname",
                         value = "",
                         hint = "Lastname",
-                        placeholder = "Lee"
+                        placeholder = "Lee",
+                        listableSpan = 2.0
                 ),
                 QuickFormInputElement(
                         name = "address",
@@ -93,6 +96,8 @@ class FormActivity : AppCompatActivity() {
                 context = context,
                 recyclerView = recyclerView,
                 listableType = ListableTypes.Person,
+                useCustomSpan = true,
+                gridSize = 2,
                 listables = form,
                 listableBindingListener = { listable, listableBinding, position ->
                     when (listable.getListableType()) {
@@ -114,7 +119,7 @@ class FormActivity : AppCompatActivity() {
                 listableClickedListener = { listable, listableBinding, position ->
 
                 },
-                layoutManagerType = LayoutManager.Vertical
+                layoutManagerType = LayoutManager.Grid
         )
 
         binding.submit.setOnClickListener {

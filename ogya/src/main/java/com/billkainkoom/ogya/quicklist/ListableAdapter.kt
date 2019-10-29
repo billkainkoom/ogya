@@ -18,8 +18,6 @@ import com.billkainkoom.ogya.shared.QuickFormInputElement
  */
 
 
-
-
 class ListableAdapter<T : Listable> internal constructor(
         private val context: Context,
         private val listableType: ListableType,
@@ -64,20 +62,31 @@ class ListableAdapter<T : Listable> internal constructor(
             viewBinding.root.setOnClickListener { listableClickedListener(getItem(adapterPosition), viewBinding, adapterPosition) }
 
             //form functionality
-            (viewBinding.root.findViewWithTag<View>("input") as? EditText)?.let { input->
-                input.watch { text ->
-                    if(getItem(adapterPosition) is QuickFormInputElement){
+            (viewBinding.root.findViewWithTag<View>("input") as? EditText)?.let { input ->
+                input.watch(textChanged = { text ->
+                    if (getItem(adapterPosition) is QuickFormInputElement) {
                         (getItem(adapterPosition) as QuickFormInputElement).value = text
                     }
-                }
+                }, afterTextChanged = { text ->
+                    if (getItem(adapterPosition) is QuickFormInputElement) {
+                        (getItem(adapterPosition) as? QuickFormInputElement)?.let { quickFormInputElement ->
+                            if (text.length >= quickFormInputElement.inputLength) {
+                                val nextInput = input.focusSearch(View.FOCUS_RIGHT)
+                                        ?: input.focusSearch(View.FOCUS_DOWN)
+
+                                nextInput?.requestFocus()
+                            }
+                        }
+                    }
+                })
             }
         }
     }
 
-    fun retrieveFormValues() : HashMap<String,String>{
-        val formData = hashMapOf<String,String>()
-        for(listable in listables){
-            if(listable is QuickFormInputElement){
+    fun retrieveFormValues(): HashMap<String, String> {
+        val formData = hashMapOf<String, String>()
+        for (listable in listables) {
+            if (listable is QuickFormInputElement) {
                 formData[listable.name] = listable.value
             }
         }

@@ -39,18 +39,18 @@ fun ImageView.tealize() {
 }
 
 
-fun EditText.watch(afterTextChanged: (text: String) -> Unit) {
+fun EditText.watch(textChanged: (text: String) -> Unit,afterTextChanged: (text: Editable) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
 
         }
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            afterTextChanged(this@watch.text.toString())
+            textChanged(this@watch.text.toString())
         }
 
         override fun afterTextChanged(s: Editable) {
-
+            afterTextChanged(s)
         }
     })
 }
