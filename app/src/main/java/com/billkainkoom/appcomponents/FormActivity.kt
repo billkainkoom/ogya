@@ -65,6 +65,7 @@ class FormActivity : AppCompatActivity() {
                         value = "",
                         hint = "Lastname",
                         placeholder = "Lee",
+                        inputLength = 3,
                         listableSpan = 2.0
                 ),
                 QuickFormInputElement(
@@ -72,14 +73,16 @@ class FormActivity : AppCompatActivity() {
                         value = "",
                         hint = "Address",
                         placeholder = "Kasoa 212 LP",
-                        inputType = InputType.TYPE_CLASS_NUMBER
+                        inputType = InputType.TYPE_CLASS_NUMBER,
+                        inputLength = 3
                 ),
                 QuickFormInputElement(
                         name = "phone_number",
                         value = "",
                         hint = "Phone Number",
                         placeholder = "0266 175 924",
-                        inputType = InputType.TYPE_CLASS_PHONE
+                        inputType = InputType.TYPE_CLASS_PHONE,
+                        inputLength = 3
                 ),
                 MyPerson(name = "Adwoa Lee", email = "adwoalee@gmail.com"),
                 QuickFormInputElement(

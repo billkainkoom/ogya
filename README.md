@@ -30,7 +30,7 @@ Ogya is a set of tools for quick android development. It gives you a consistent 
 3. __Add the dependency__    
     ```gradle
     dependencies {
-    	        implementation 'com.github.billkainkoom:ogya:0.87'
+    	        implementation 'com.github.billkainkoom:ogya:0.88'
     	}
     ```
 
@@ -783,5 +783,5 @@ And that's it!
 ![](https://github.com/billkainkoom/ogya/blob/master/images/form_results.png)
    
 ```groovy
-	dependencies { implementation 'com.github.billkainkoom:ogya:0.87' }
+	dependencies { implementation 'com.github.billkainkoom:ogya:0.88' }
 ```
