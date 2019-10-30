@@ -33,6 +33,7 @@ class FormActivity : AppCompatActivity() {
     }
 
     fun loadList(context: Context, binding: ActivityFormBinding, recyclerView: RecyclerView): ListableAdapter<Listable> {
+        var prev = 0
         val form = mutableListOf(
                 QuickFormInputElement(
                         name = "time",
@@ -50,6 +51,13 @@ class FormActivity : AppCompatActivity() {
 
                         },
                         inputLength = 5,
+                        textWatcher = TextWatcher(afterTextChanged = { s->
+
+                            if(s.length == 2 && (s.length - prev > 0)){
+                                s.insert(2,"/")
+                            }
+                            prev = s.length
+                        }),
                         listableSpan = 2.0
                 ),
                 QuickFormInputElement(

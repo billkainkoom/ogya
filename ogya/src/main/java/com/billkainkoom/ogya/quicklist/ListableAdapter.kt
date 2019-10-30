@@ -70,10 +70,13 @@ class ListableAdapter<T : Listable> internal constructor(
                 }, afterTextChanged = { text ->
                     if (getItem(adapterPosition) is QuickFormInputElement) {
                         (getItem(adapterPosition) as? QuickFormInputElement)?.let { quickFormInputElement ->
+                            quickFormInputElement.textWatcher?.let { textWatcher ->
+                                textWatcher.afterTextChanged(text)
+                                input.setSelection(input.text.length)
+                            }
                             if (text.length >= quickFormInputElement.inputLength) {
                                 val nextInput = input.focusSearch(View.FOCUS_RIGHT)
                                         ?: input.focusSearch(View.FOCUS_DOWN)
-
                                 nextInput?.requestFocus()
                             }
                         }

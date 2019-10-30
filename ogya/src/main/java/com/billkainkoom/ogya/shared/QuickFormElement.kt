@@ -14,7 +14,7 @@ enum class QuickFormInputType {
 }
 
 data class ActionButton(val image: Int, val showOnFocus: Boolean = false, val handler: () -> Unit)
-
+data class TextWatcher(val afterTextChanged: (Editable) -> Unit = { })
 
 data class QuickFormInputElement(
         val name: String = "",
@@ -26,7 +26,8 @@ data class QuickFormInputElement(
         val type: QuickFormInputType = QuickFormInputType.Input,
         val ofListableType: ListableType = OgyaListableTypes.QuickFormInput,
         val listableSpan: Double = 1.0,
-        val actionButton: ActionButton? = null
+        val actionButton: ActionButton? = null,
+        val textWatcher: TextWatcher? = null
 ) : Listable(span = listableSpan) {
 
     override fun getListableType(): ListableType? {

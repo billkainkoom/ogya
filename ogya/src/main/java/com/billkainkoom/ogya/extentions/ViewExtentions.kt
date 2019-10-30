@@ -50,7 +50,9 @@ fun EditText.watch(textChanged: (text: String) -> Unit,afterTextChanged: (text: 
         }
 
         override fun afterTextChanged(s: Editable) {
+            this@watch.removeTextChangedListener(this)
             afterTextChanged(s)
+            this@watch.addTextChangedListener(this)
         }
     })
 }
