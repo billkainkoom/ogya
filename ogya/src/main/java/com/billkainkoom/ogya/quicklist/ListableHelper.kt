@@ -18,7 +18,8 @@ object ListableHelper {
                                 layoutManagerType: LayoutManager = LayoutManager.Vertical,
                                 stackFromEnd: Boolean = false,
                                 gridSize: Int = 0,
-                                useCustomSpan: Boolean = false
+                                useCustomSpan: Boolean = false,
+                                isRecyclable: Boolean = true
 
     ): ListableAdapter<T> {
 
@@ -58,10 +59,12 @@ object ListableHelper {
         val adapter = ListableAdapter(context, listableType, listables,
                 listableBindingListener = { listable, listableBinding, position ->
                     listableBindingListener(listable, listableBinding, position)
-                }, listableClickedListener = { listable, listableBinding, position ->
-            //do something on card clicked
-            listableClickedListener(listable, listableBinding, position)
-        })
+                },
+                listableClickedListener = { listable, listableBinding, position ->
+                    listableClickedListener(listable, listableBinding, position)
+                },
+                isRecyclable = isRecyclable
+        )
 
         recyclerView.adapter = adapter
         adapter.submitList(listables)
@@ -101,20 +104,23 @@ object ListableHelper {
             }
             LayoutManager.Grid -> {
                 recyclerView.layoutManager = GridLayoutManager(context, gridSize)
-            }else->{}
+            }
+            else -> {
+            }
         }
 
         val adapter = ListablePagerAdapter<T>(context, listableType,
                 listableBindingListener = { listable, listableBinding, position ->
                     listableBindingListener(listable, listableBinding, position)
-                }, listableClickedListener = { listable, listableBinding, position ->
-            //do something on card clicked
-            listableClickedListener(listable, listableBinding, position)
-        })
+                },
+                listableClickedListener = { listable, listableBinding, position ->
+                    listableClickedListener(listable, listableBinding, position)
+                }
+        )
 
         recyclerView.adapter = adapter
 
-        if(layoutManagerType == LayoutManager.Grid){
+        if (layoutManagerType == LayoutManager.Grid) {
             if (useCustomSpan) {
                 (recyclerView.layoutManager as GridLayoutManager).spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override
@@ -129,6 +135,7 @@ object ListableHelper {
                 }
             }
         }
+
 
         return adapter
     }

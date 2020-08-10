@@ -35,6 +35,7 @@
             android:src="@drawable/ic_info_outline_black_24dp" />
 
     </RelativeLayout>
+
 </layout>
 
 

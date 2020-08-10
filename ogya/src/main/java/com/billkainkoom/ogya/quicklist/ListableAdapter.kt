@@ -23,8 +23,9 @@ class ListableAdapter<T : Listable> internal constructor(
         private val listableType: ListableType,
         var listables: MutableList<T>,
         private val listableBindingListener: (T, ViewDataBinding, Int) -> Unit,
-        private val listableClickedListener: (T, ViewDataBinding, Int) -> Unit)
-    : ListAdapter<T, ListableAdapter<T>.ListableViewHolder>(ListableAdapterDiffCallback<T>()) {
+        private val listableClickedListener: (T, ViewDataBinding, Int) -> Unit,
+        var isRecyclable: Boolean = true
+) : ListAdapter<T, ListableAdapter<T>.ListableViewHolder>(ListableAdapterDiffCallback<T>()) {
 
     private var currentListableType: ListableType? = null
 
@@ -53,6 +54,7 @@ class ListableAdapter<T : Listable> internal constructor(
     }
 
     override fun onBindViewHolder(listableViewHolder: ListableViewHolder, listablePosition: Int) {
+        listableViewHolder.setIsRecyclable(isRecyclable)
         listableBindingListener(getItem(listablePosition), listableViewHolder.viewBinding, listablePosition)
     }
 

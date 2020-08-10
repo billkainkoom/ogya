@@ -7,5 +7,3 @@ package com.billkainkoom.ogya.quicklist
 abstract class Listable(@Transient val identifier: String = "", @Transient val span: Double = 1.0)  {
     abstract fun getListableType(): ListableType?
 }
-
-
