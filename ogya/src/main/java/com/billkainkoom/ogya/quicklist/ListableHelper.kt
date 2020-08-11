@@ -19,7 +19,7 @@ object ListableHelper {
                                 stackFromEnd: Boolean = false,
                                 gridSize: Int = 0,
                                 useCustomSpan: Boolean = false,
-                                inputTags: List<Int> = listOf(),
+                                inputTags: List<String> = listOf(),
                                 inputChangeListener: (T, Int, InputValue) -> Unit = { w, x, y -> },
                                 isRecyclable: Boolean = true
 
