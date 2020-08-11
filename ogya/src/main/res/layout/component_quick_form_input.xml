@@ -6,21 +6,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/ogya_default_margin"
-        android:paddingRight="@dimen/ogya_default_margin"
-        android:paddingTop="@dimen/ogya_default_margin">
+        android:paddingTop="@dimen/ogya_default_margin"
+        android:paddingRight="@dimen/ogya_default_margin">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/input_layout">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input"
-                android:tag="input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:cursorVisible="true"
-                android:hint="Hint" />
+                android:hint="Hint"
+                android:imeOptions="actionDone"
+                android:tag="input" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
