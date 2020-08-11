@@ -17,6 +17,7 @@ import com.billkainkoom.ogya.shared.QuickFormInputElement
  * Created by  Bill Kwaku Ansah Inkoom on 6/22/2015.
  */
 
+data class InputValue(var id: Int, var value: String)
 
 class ListableAdapter<T : Listable> internal constructor(
         private val context: Context,
@@ -24,8 +25,8 @@ class ListableAdapter<T : Listable> internal constructor(
         var listables: MutableList<T>,
         private val listableBindingListener: (T, ViewDataBinding, Int) -> Unit,
         private val listableClickedListener: (T, ViewDataBinding, Int) -> Unit,
-        private val inputTags: List<String>,
-        private val inputChangeListener: (T, Int, String, String) -> Unit,
+        private val inputTags: List<Int>,
+        private val inputChangeListener: (T, Int, InputValue) -> Unit,
         var isRecyclable: Boolean = true
 ) : ListAdapter<T, ListableAdapter<T>.ListableViewHolder>(ListableAdapterDiffCallback<T>()) {
 
@@ -85,9 +86,9 @@ class ListableAdapter<T : Listable> internal constructor(
 
             //custom form functionality
             for (inputTag in inputTags) {
-                (viewBinding.root.findViewWithTag<View>(inputTag) as? EditText)?.let { input ->
+                (viewBinding.root.findViewById<View>(inputTag) as? EditText)?.let { input ->
                     input.watch(textChanged = { text ->
-                        inputChangeListener(getItem(adapterPosition), adapterPosition, inputTag, text)
+                        inputChangeListener(getItem(adapterPosition), adapterPosition, InputValue(id = inputTag, value = text))
                     }, afterTextChanged = { text ->
                         input.setSelection(input.text.length)
                     })
