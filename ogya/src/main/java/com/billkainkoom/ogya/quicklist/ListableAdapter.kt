@@ -24,6 +24,8 @@ class ListableAdapter<T : Listable> internal constructor(
         var listables: MutableList<T>,
         private val listableBindingListener: (T, ViewDataBinding, Int) -> Unit,
         private val listableClickedListener: (T, ViewDataBinding, Int) -> Unit,
+        private val inputTags: List<String>,
+        private val inputChangeListener: (T, Int, String, String) -> Unit,
         var isRecyclable: Boolean = true
 ) : ListAdapter<T, ListableAdapter<T>.ListableViewHolder>(ListableAdapterDiffCallback<T>()) {
 
@@ -79,6 +81,17 @@ class ListableAdapter<T : Listable> internal constructor(
                         }
                     }
                 })
+            }
+
+            //custom form functionality
+            for (inputTag in inputTags) {
+                (viewBinding.root.findViewWithTag<View>(inputTag) as? EditText)?.let { input ->
+                    input.watch(textChanged = { text ->
+                        inputChangeListener(getItem(adapterPosition), adapterPosition, inputTag, text)
+                    }, afterTextChanged = { text ->
+                        input.setSelection(input.text.length)
+                    })
+                }
             }
         }
     }

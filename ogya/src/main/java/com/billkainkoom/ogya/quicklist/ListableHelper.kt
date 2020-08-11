@@ -19,6 +19,8 @@ object ListableHelper {
                                 stackFromEnd: Boolean = false,
                                 gridSize: Int = 0,
                                 useCustomSpan: Boolean = false,
+                                inputTags: List<String> = listOf(),
+                                inputChangeListener: (T, Int, String, String) -> Unit = { w, x, y, z -> },
                                 isRecyclable: Boolean = true
 
     ): ListableAdapter<T> {
@@ -63,6 +65,8 @@ object ListableHelper {
                 listableClickedListener = { listable, listableBinding, position ->
                     listableClickedListener(listable, listableBinding, position)
                 },
+                inputTags = inputTags,
+                inputChangeListener = inputChangeListener,
                 isRecyclable = isRecyclable
         )
 
