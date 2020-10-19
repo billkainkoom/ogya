@@ -49,7 +49,10 @@ class ListableAdapter<T : Listable> internal constructor(
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ListableViewHolder {
-        return ListableViewHolder(DataBindingUtil.inflate(LayoutInflater.from(context), currentListableType!!.layout, null, false))
+        return ListableViewHolder(
+                DataBindingUtil.inflate(
+                        LayoutInflater.from(context),
+                        currentListableType!!.layout, viewGroup, false))
     }
 
     override fun onBindViewHolder(listableViewHolder: ListableViewHolder, listablePosition: Int) {
