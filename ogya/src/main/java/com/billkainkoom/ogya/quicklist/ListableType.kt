@@ -1,3 +1,5 @@
 package com.billkainkoom.ogya.quicklist
 
-data class ListableType(val layout: Int = 0)
+import androidx.annotation.LayoutRes
+
+data class ListableType(@LayoutRes val layout: Int = 0)
