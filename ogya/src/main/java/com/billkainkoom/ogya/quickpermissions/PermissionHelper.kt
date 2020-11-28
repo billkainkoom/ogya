@@ -13,7 +13,7 @@ import com.billkainkoom.ogya.shared.QuickObject
 /**
  * Created by Bill on 10/25/2017.
  */
-class PermissionHelper(private var activity: Activity, internal var context: Context) {
+class PermissionHelper(private var activity: Activity) {
 
 
     var requestCode = 829
@@ -60,7 +60,7 @@ class PermissionHelper(private var activity: Activity, internal var context: Con
             }
         }
         if (!allGranted) {
-            QuickDialog(context = context, style = QuickDialogType.Alert, title = quickObject.title, message = quickObject.subtitle, image = quickObject.image)
+            QuickDialog(context = activity, style = QuickDialogType.Alert, title = quickObject.title, message = quickObject.subtitle, image = quickObject.image)
                     .overrideClicks({ dismiss ->
                         requestPermissions(requestCode, *permissionList)
                         dismiss()
