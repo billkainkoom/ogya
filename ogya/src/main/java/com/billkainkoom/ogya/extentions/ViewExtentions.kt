@@ -8,6 +8,9 @@ import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.RecyclerView
+import com.billkainkoom.ogya.quicklist.*
 
 
 fun ImageView.greylize() {
@@ -39,7 +42,7 @@ fun ImageView.tealize() {
 }
 
 
-fun EditText.watch(textChanged: (text: String) -> Unit,afterTextChanged: (text: Editable) -> Unit) {
+fun EditText.watch(textChanged: (text: String) -> Unit, afterTextChanged: (text: Editable) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
 
@@ -71,4 +74,36 @@ fun EditText.enableEditing(enable: Boolean) {
     this.isFocusable = enable
     this.isFocusableInTouchMode = enable
     this.isClickable = enable
+}
+
+typealias ListableCallBack<T> = (T, ViewDataBinding, Int) -> Unit
+
+fun <T: Listable> RecyclerView.loadList(
+        listables: MutableList<T>,
+        defaultListableType: ListableType,
+        listableBindingListener: ListableCallBack<T> = { x, y, z -> },
+        listableClickListener: ListableCallBack<T> = { x, y, z -> },
+        layoutManagerType: LayoutManager = LayoutManager.Vertical,
+        stackFromEnd: Boolean = false,
+        gridSize: Int = 0,
+        useCustomSpan: Boolean = false,
+        inputTags: List<String> = listOf(),
+        inputChangeListener: (T, Int, InputValue) -> Unit = { w, x, y -> },
+        isRecyclable: Boolean = true
+) {
+    ListableHelper.loadList(
+            this.context,
+            this,
+            listables,
+            defaultListableType,
+            listableBindingListener = listableBindingListener,
+            listableClickedListener = listableClickListener,
+            layoutManagerType = layoutManagerType,
+            stackFromEnd = stackFromEnd,
+            gridSize = gridSize,
+            useCustomSpan = useCustomSpan,
+            inputTags = inputTags,
+            inputChangeListener = inputChangeListener,
+            isRecyclable = isRecyclable
+    )
 }

@@ -22,7 +22,6 @@ object ListableHelper {
                                 inputTags: List<String> = listOf(),
                                 inputChangeListener: (T, Int, InputValue) -> Unit = { w, x, y -> },
                                 isRecyclable: Boolean = true
-
     ): ListableAdapter<T> {
 
 
